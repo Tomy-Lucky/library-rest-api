@@ -20,4 +20,6 @@ interface BookAvailabilityRepository : JpaRepository<BookAvailabilityModel, Long
         where book.title = :title
     """)
     fun findByBookTitle(@Param("title") title: String): BookAvailabilityModel?
+
+    fun deleteBookAvailabilityModelByBook_Title(title: String)
 }

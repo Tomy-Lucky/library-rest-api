@@ -30,7 +30,16 @@ class OrderService(
 
     fun findById(id: Long) = orderRepository.findByIdOrNull(id)?.toDTO() ?: throw ElementNotFoundException("order")
 
-    fun addOrder(bookId: Long, memberId: Long, orderStatus: OrderStatus, overdueDate: LocalDateTime): Order {
+    fun deleteById(id: Long) {
+        orderRepository.deleteById(id)
+    }
+
+    fun addOrder(
+        bookId: Long,
+        memberId: Long,
+        orderStatus: OrderStatus,
+        overdueDate: LocalDateTime
+    ): Order {
         val bookAvailability = bookAvailabilityService.findByBookId(bookId)
         val member = memberService.findById(memberId)
 

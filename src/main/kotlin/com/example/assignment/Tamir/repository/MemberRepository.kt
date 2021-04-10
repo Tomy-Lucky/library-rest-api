@@ -5,4 +5,8 @@ import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
 
 @Repository
-interface MemberRepository: JpaRepository<MemberModel, Long>
+interface MemberRepository: JpaRepository<MemberModel, Long> {
+
+    fun findByName(name: String): MemberModel
+    fun deleteByName(name: String)
+}

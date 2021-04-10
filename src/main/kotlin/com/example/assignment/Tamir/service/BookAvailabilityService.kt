@@ -1,6 +1,7 @@
 package com.example.assignment.Tamir.service
 
 import com.example.assignment.Tamir.dto.Book
+import com.example.assignment.Tamir.dto.BookAvailability
 import com.example.assignment.Tamir.exception.ElementNotFoundException
 import com.example.assignment.Tamir.model.BookAvailabilityModel
 import com.example.assignment.Tamir.model.BookModel
@@ -32,6 +33,10 @@ class BookAvailabilityService(
     fun findByBookTitle(title: String) =
         bookAvailabilityRepository.findByBookTitle(title)?.toDTO() ?: throw ElementNotFoundException("bookAvailability")
 
+    fun deleteByBookTitle(title: String) {
+        bookAvailabilityRepository.deleteBookAvailabilityModelByBook_Title(title)
+    }
+
     fun addBookDetails(
         title: String,
         author: String,
@@ -53,6 +58,37 @@ class BookAvailabilityService(
             overdueAmount = overdueAmount
         )
     ).toDTO()
+
+    fun replaceBookDetails(
+        title: String,
+        author: String,
+        description: String,
+        totalAmount: Long,
+        inUseAmount: Long,
+        overdueAmount: Long
+    ): BookAvailability {
+        val book = bookAvailabilityRepository.findByBookTitle(title)
+
+        return if (book == null)
+            addBookDetails(
+                title = title,
+                author = author,
+                description = description,
+                totalAmount = totalAmount,
+                inUseAmount = inUseAmount,
+                overdueAmount = overdueAmount
+            )
+        else {
+            book.book.title = title
+            book.book.author = author
+            book.book.description = description
+            book.totalAmount = totalAmount
+            book.inUseAmount = inUseAmount
+            book.overdueAmount = overdueAmount
+
+            book.toDTO()
+        }
+    }
 
     @Transactional
     fun updateBookAmounts(id: Long, bookUpdateOptions: BookUpdateOptions) {
