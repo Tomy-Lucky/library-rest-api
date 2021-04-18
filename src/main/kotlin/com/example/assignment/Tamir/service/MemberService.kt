@@ -18,21 +18,28 @@ class MemberService(
 
     fun findById(id: Long) = memberRepository.findByIdOrNull(id)?.toDTO() ?: throw ElementNotFoundException("member")
 
-    fun addMember(name: String) = memberRepository.save(
+    fun findByNameAndPassword(name: String, password: String) = memberRepository.findByNameAndPassword(
+        name = name,
+        password = password
+    )?.toDTO() ?: throw ElementNotFoundException("member")
+
+    fun addMember(name: String, password: String) = memberRepository.save(
         MemberModel(
             id = 0,
-            name = name
+            name = name,
+            password = password
         )
     ).toDTO()
 
     @Transactional
-    fun replaceById(id: Long, name: String): Member {
+    fun replaceById(id: Long, name: String, password: String): Member {
         val memberModel = memberRepository.findByIdOrNull(id)
 
         return if (memberModel == null)
-            addMember(name)
+            addMember(name = name, password = password)
         else {
             memberModel.name = name
+            memberModel.password = password
             memberModel.toDTO()
         }
     }

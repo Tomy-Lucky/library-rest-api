@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository
 @Repository
 interface MemberRepository: JpaRepository<MemberModel, Long> {
 
-    fun findByName(name: String): MemberModel
+    fun findByName(name: String): MemberModel?
+    fun findByNameAndPassword(name: String, password: String): MemberModel?
     fun deleteByName(name: String)
 }

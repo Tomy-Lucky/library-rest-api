@@ -38,8 +38,9 @@ class LibraryController(
 
     @GetMapping("/add/member")
     fun createMember(
-        @RequestParam("name", required = true) name: String
-    ) = memberService.addMember(name = name)
+        @RequestParam("name", required = true) name: String,
+        @RequestParam("password", required = true) password: String
+    ) = memberService.addMember(name = name, password = password)
 
     @GetMapping("/add/order")
     fun createOrder(

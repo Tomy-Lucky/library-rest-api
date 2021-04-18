@@ -20,11 +20,12 @@ class MemberController(
     fun getAllMembers() = memberService.findAll()
 
     @PostMapping("/add/member")
-    fun createMember(@RequestBody addMember: AddMember) = memberService.addMember(name = addMember.name)
+    fun createMember(@RequestBody addMember: AddMember) =
+        memberService.addMember(name = addMember.name, password = addMember.password)
 
     @PutMapping("/replace/member/{id}")
     fun replace(@RequestBody addMember: AddMember, @PathVariable id: Long) =
-        memberService.replaceById(id = id, name = addMember.name)
+        memberService.replaceById(id = id, name = addMember.name, password = addMember.password)
 
     @DeleteMapping("/add/member/{name}")
     fun deleteMember(@PathVariable name: String) {
@@ -33,7 +34,8 @@ class MemberController(
 }
 
 data class AddMember(
-    val name: String
+    val name: String,
+    val password: String
 )
 
 

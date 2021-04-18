@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service
 
 @Service
 class OrderService(
-    private val bookService: BookService,
     private val bookAvailabilityService: BookAvailabilityService,
     private val memberService: MemberService,
     private val orderRepository: OrderRepository
@@ -61,7 +60,8 @@ class OrderService(
                 ),
                 member = MemberModel(
                     id = member.id,
-                    name = member.name
+                    name = member.name,
+                    password = member.password
                 ),
                 status = orderStatus,
                 overdueDate = overdueDate

@@ -20,6 +20,9 @@ class MemberModel(
     @Column
     var name: String,
 
+    @Column
+    var password: String,
+
     @OneToMany(mappedBy = "member")
     var orders: List<OrderModel>? = null
 )
@@ -27,5 +30,6 @@ class MemberModel(
 fun MemberModel.toDTO() = Member(
     id = id,
     name = name,
+    password = password,
     orders = orders?.map { it.toDTO() }
 )
